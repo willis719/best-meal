@@ -1,0 +1,12 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": null,
+    "database": "best_meal",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "use-env-variable": "DATABASE-URL"
+  }
+}
