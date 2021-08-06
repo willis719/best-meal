@@ -11,9 +11,9 @@ router.get('/', function(req, res, next) {
 // localhost:3000/api/v1/users/register
 router.post('/register', async (req, res) => {
   // check for username and password
-  if (!req.body.email || !req.body.password || !req.body.username) {
+  if (!req.body.email || !req.body.username || !req.body.password  || !req.body.gender) {
     return res.status(400).json({
-      error: 'Please fill out email, username, and password fields'
+      error: 'Please fill out email, username, password and gender fields'
     })
   }
   //check database for exisiting user
@@ -52,11 +52,6 @@ router.post('/register', async (req, res) => {
     email: req.body.email,
     password: hash,
     gender: req.body.gender,
-    age: req.body.age,
-    weight: req.body.weight,
-    height: req.body.height,
-    goal: req.body.goal,
-    activityLevel: req.body.activityLevel
   })
   
   //respond with success message
@@ -108,11 +103,6 @@ router.post('/login', async (req, res) => {
     email:user.email,
     password:user.password,
     gender: user.gender,
-    age: user.age,
-    weight: user.weight,
-    height: user.height,
-    goal: user.goal,
-    activityLevel: user.activityLevel
   })
 })
 
