@@ -11,6 +11,9 @@ module.exports = {
       age: {
         type: Sequelize.INTEGER
       },
+      gender: {
+        type: Sequelize.STRING
+      },
       weight: {
         type: Sequelize.INTEGER
       },

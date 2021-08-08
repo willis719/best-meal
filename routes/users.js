@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const models = require('../models')
 const bcrypt = require('bcrypt')
+const checkAuth = require('../auth/CheckAuth');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -11,9 +12,9 @@ router.get('/', function(req, res, next) {
 // localhost:3000/api/v1/users/register
 router.post('/register', async (req, res) => {
   // check for username and password
-  if (!req.body.email || !req.body.username || !req.body.password  || !req.body.gender) {
+  if (!req.body.email || !req.body.username || !req.body.password) {
     return res.status(400).json({
-      error: 'Please fill out email, username, password and gender fields'
+      error: 'Please fill out email, username, and password fields'
     })
   }
   //check database for exisiting user
@@ -50,8 +51,7 @@ router.post('/register', async (req, res) => {
   const newUser = await models.User.create({
     username: req.body.username,
     email: req.body.email,
-    password: hash,
-    gender: req.body.gender,
+    password: hash
   })
   
   //respond with success message
@@ -102,8 +102,37 @@ router.post('/login', async (req, res) => {
     username: user.username,
     email:user.email,
     password:user.password,
-    gender: user.gender,
   })
 })
+
+// checking to see if user is logged in and sending back appropriate data to redux to store
+// localhost:3000/api/users/current
+router.get('/current', (req, res) => {
+  const { user } = req.session
+
+  if(user) {
+    res.json({
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      password: user.password,
+    })
+  } else {
+    res.status(401).json({
+      error: 'not logged in'
+    })
+  }
+})
+
+// Allows user to log out of application
+// localhost:3000/api/users/logout
+router.get('/logout', (req, res) => {
+  req.session.user = null;
+  res.json({
+    success: 'logged out'
+  })
+})
+
+
 
 module.exports = router;

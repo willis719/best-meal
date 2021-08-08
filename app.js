@@ -8,6 +8,7 @@ const models = require('./models')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var attributesRouter = require('./routes/attributes')
 
 var app = express();
 
@@ -31,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api/v1/users', usersRouter)
+app.use('/api/v1/attributes', attributesRouter)
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'client/build', 'index.html'))

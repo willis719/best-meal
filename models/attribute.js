@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   Attribute.init({
     age: DataTypes.INTEGER,
+    gender: DataTypes.STRING,
     weight: DataTypes.INTEGER,
     height: DataTypes.INTEGER,
     goal: DataTypes.STRING,
